@@ -1,166 +1,146 @@
-# frappe framework Version-15 in Debian 12
-A complete Guide to Install Frappe framework
+# **Frappe Framework Installation (Version 15) on Debian 12**
 
-### STEP 1 Install Install git, python, and redis
+A complete step-by-step guide to install **Frappe Framework** on Debian 12.
 
-    sudo apt install git python-is-python3 python3-dev python3-pip redis-server libmariadb-dev mariadb-server mariadb-client pkg-config
+---
 
-### STEP 2 Install virtualenv
-    
-    sudo apt install -y python3-venv
-    
+## **STEP 1: Install Git, Python, and Redis**
 
-### STEP 3 Install MariaDB
+```bash
+sudo apt install git python-is-python3 python3-dev python3-pip redis-server libmariadb-dev mariadb-server mariadb-client pkg-config
+```
 
-    sudo apt-get install software-properties-common
-    sudo apt install mariadb-server
-    sudo systemctl status mariadb
-    sudo mysql_secure_installation
-    
-    
-      In order to log into MariaDB to secure it, we'll need the current
-      password for the root user. If you've just installed MariaDB, and
-      haven't set the root password yet, you should just press enter here.
+---
 
-      Enter current password for root (enter for none): # PRESS ENTER
-      OK, successfully used password, moving on...
-      
-      
-      Switch to unix_socket authentication [Y/n] Y
-      Enabled successfully!
-      Reloading privilege tables..
-       ... Success!
- 
-      Change the root password? [Y/n] Y
-      New password: 
-      Re-enter new password: 
-      Password updated successfully!
-      Reloading privilege tables..
-       ... Success!
+## **STEP 2: Install Virtual Environment**
 
-      Remove anonymous users? [Y/n] Y
-       ... Success!
- 
-       Disallow root login remotely? [Y/n] Y
-       ... Success!
+```bash
+sudo apt install -y python3-venv
+```
 
-       Remove test database and access to it? [Y/n] Y
-       - Dropping test database...
-       ... Success!
-       - Removing privileges on test database...
-       ... Success!
- 
-       Reload privilege tables now? [Y/n] Y
-       ... Success!
+---
 
- 
-    
-    
-    
-### STEP 6  MySQL database development files
+## **STEP 3: Install MariaDB**
 
-    sudo apt-get install libmysqlclient-dev  ????
+```bash
+sudo apt-get install software-properties-common
+sudo apt install mariadb-server
+sudo systemctl status mariadb
+sudo mysql_secure_installation
+```
 
-### STEP 7 Edit the mariadb configuration ( unicode character encoding )
+### **MariaDB Secure Installation Prompts**
 
-    sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+* Press **Enter** for the current root password (if fresh install)
+* Switch to unix\_socket authentication: **Y**
+* Change root password: **Y** (set a strong password)
+* Remove anonymous users: **Y**
+* Disallow root login remotely: **Y**
+* Remove test database: **Y**
+* Reload privilege tables: **Y**
 
-add this to the 50-server.cnf file
+---
 
-    
-    [server]
-    user = mysql
-    pid-file = /run/mysqld/mysqld.pid
-    socket = /run/mysqld/mysqld.sock
-    basedir = /usr
-    datadir = /var/lib/mysql
-    tmpdir = /tmp
-    lc-messages-dir = /usr/share/mysql
-    bind-address = 127.0.0.1
-    query_cache_size = 16M
-    log_error = /var/log/mysql/error.log
-    
-    [mysqld]
-    innodb-file-format=barracuda
-    innodb-file-per-table=1
-    innodb-large-prefix=1
-    character-set-client-handshake = FALSE
-    character-set-server = utf8mb4
-    collation-server = utf8mb4_unicode_ci      
-     
-    [mysql]
-    default-character-set = utf8mb4
+## **STEP 9: Install Node.js 18.x**
 
-Now press (Ctrl-X) to exit
+```bash
+sudo apt install curl 
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+source ~/.profile
+nvm install 18
+```
 
-    sudo service mysql restart
+---
 
-### STEP 9 install Node.js 18.X package
+## **STEP 10: Install Yarn**
 
-    sudo apt install curl 
-    curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
-    source ~/.profile
-    nvm install 18
+```bash
+sudo apt-get install npm
+sudo npm install -g yarn
+```
 
-### STEP 10  install Yarn
+---
 
-    sudo apt-get install npm
+## **STEP 11: Install wkhtmltopdf**
 
-    sudo npm install -g yarn
+```bash
+sudo apt-get install xvfb libfontconfig wkhtmltopdf
+```
 
-### STEP 11 install wkhtmltopdf
+---
 
-    sudo apt-get install xvfb libfontconfig wkhtmltopdf
-    
+## **STEP 12: Install Frappe Bench**
 
-### STEP 12 install frappe-bench
+```bash
+pip install frappe-bench --break-system-packages
+```
 
-    pip install frappe-bench --break-system-packages
+### **Add Frappe Bench to PATH (Temporary)**
 
-    Add to PATH (Temporary for Current Terminal)
-    export PATH=$PATH:/home/chanaka/.local/bin
+```bash
+export PATH=$PATH:/home/chanaka/.local/bin
+```
 
-    
-    bench --version
-    
-### STEP 13 initilise the frappe bench & install frappe latest version 
+Check installation:
 
-    bench init frappe-bench
-    
-    cd frappe-bench/
-    bench start
-    
-### STEP 14 create a site in frappe bench 
+```bash
+bench --version
+```
 
->### Note 
->Warning: MariaDB version ['10.11', '7'] is more than 10.8 which is not yet tested with Frappe Framework.
-    
-    bench new-site llink.wyb.ac.lk
-    
-    bench --site llink.wyb.ac.lk add-to-hosts
+---
 
-    debin
-    sudo nano /etc/hosts
-    windows
-    Navigate to:
-    C:\Windows\System32\drivers\etc\
-    Open the hosts file
+## **STEP 13: Initialize Frappe Bench**
 
-Open url http://llink.wyb.ac.lk:8000 to login 
+```bash
+bench init frappe-bench
+cd frappe-bench/
+bench start
+```
 
+---
 
-### STEP 15 install ERPNext latest version in bench & site
+## **STEP 14: Create a Site in Frappe Bench**
 
-    
-    bench get-app erpnext --branch version-15
-    ###OR
-    bench get-app https://github.com/frappe/erpnext --branch version-15
+> **Note:** MariaDB version `10.11.7` is newer than `10.8` and not officially tested with Frappe Framework.
 
-    bench --site dcode.com install-app erpnext
-    
-    bench start
-    
-    
+```bash
+bench new-site llink.wyb.ac.lk
+bench --site llink.wyb.ac.lk add-to-hosts
+```
 
+### **Host Configuration**
 
-    
+* **Debian:**
+
+  ```bash
+  sudo nano /etc/hosts
+  ```
+* **Windows:**
+  Navigate to:
+
+  ```
+  C:\Windows\System32\drivers\etc\
+  ```
+
+  Edit the `hosts` file.
+
+Open in browser:
+
+```
+http://llink.wyb.ac.lk:8000
+```
+
+---
+
+## **STEP 15: Install Your App**
+
+```bash
+bench new-app [app name]
+bench start
+```
+
+---
+
+### ✅ You now have Frappe Framework (v15) installed and ready to use on Debian 12!
+
+---
