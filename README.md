@@ -1,47 +1,16 @@
-# Frappe-ERPNext Version-15 in Ubuntu 24.04 LTS
-A complete Guide to Install Frappe/ERPNext version 15  in Ubuntu 24.04 LTS
+# frappe framework Version-15 in Debian 12
+A complete Guide to Install Frappe framework
 
+### STEP 1 Install Install git, python, and redis
 
-#### Refer this for default python 3.11 setup
+    sudo apt install git python-is-python3 python3-dev python3-pip redis-server libmariadb-dev mariadb-server mariadb-client pkg-config
 
-- [D-codeE Video Tutorial](https://youtu.be/zU41gq7nji4)
-
-### Pre-requisites 
-
-      Python 3.11+                                  (python 3.12 is inbuilt in 24.04 LTS)
-      Node.js 18+
-      
-      Redis 5                                       (caching and real time updates)
-      MariaDB 10.3.x / Postgres 9.5.x               (to run database driven apps)
-      yarn 1.12+                                    (js dependency manager)
-      pip 20+                                       (py dependency manager)
-      wkhtmltopdf (version 0.12.5 with patched qt)  (for pdf generation)
-      cron                                          (bench's scheduled jobs: automated certificate renewal, scheduled backups)
-      NGINX                                         (proxying multitenant sites in production)
-
-
-> ## Note:
-> ubuntu 24.04 default python version is python3.12
-> 
-> ubuntu 24.04 default mariadb version is 10.11
-
-### STEP 1 Install git
-    sudo apt-get install git
-
-### STEP 2 install python-dev
-
-    sudo apt-get install python3-dev
-
-### STEP 3 Install setuptools and pip (Python's Package Manager).
-
-    sudo apt-get install python3-setuptools python3-pip
-
-### STEP 4 Install virtualenv
+### STEP 2 Install virtualenv
     
-    sudo apt install python3.12-venv
+    sudo apt install -y python3-venv
     
 
-### STEP 5 Install MariaDB
+### STEP 3 Install MariaDB
 
     sudo apt-get install software-properties-common
     sudo apt install mariadb-server
@@ -90,7 +59,7 @@ A complete Guide to Install Frappe/ERPNext version 15  in Ubuntu 24.04 LTS
     
 ### STEP 6  MySQL database development files
 
-    sudo apt-get install libmysqlclient-dev
+    sudo apt-get install libmysqlclient-dev  ????
 
 ### STEP 7 Edit the mariadb configuration ( unicode character encoding )
 
@@ -126,10 +95,6 @@ Now press (Ctrl-X) to exit
 
     sudo service mysql restart
 
-### STEP 8 install Redis
-    
-    sudo apt-get install redis-server
-
 ### STEP 9 install Node.js 18.X package
 
     sudo apt install curl 
@@ -150,13 +115,17 @@ Now press (Ctrl-X) to exit
 
 ### STEP 12 install frappe-bench
 
-    sudo -H pip3 install frappe-bench --break-system-packages
+    pip install frappe-bench --break-system-packages
+
+    Add to PATH (Temporary for Current Terminal)
+    export PATH=$PATH:/home/chanaka/.local/bin
+
     
     bench --version
     
 ### STEP 13 initilise the frappe bench & install frappe latest version 
 
-    bench init frappe-bench --frappe-branch version-15
+    bench init frappe-bench
     
     cd frappe-bench/
     bench start
@@ -166,11 +135,18 @@ Now press (Ctrl-X) to exit
 >### Note 
 >Warning: MariaDB version ['10.11', '7'] is more than 10.8 which is not yet tested with Frappe Framework.
     
-    bench new-site dcode.com
+    bench new-site llink.wyb.ac.lk
     
-    bench --site dcode.com add-to-hosts
+    bench --site llink.wyb.ac.lk add-to-hosts
 
-Open url http://dcode.com:8000 to login 
+    debin
+    sudo nano /etc/hosts
+    windows
+    Navigate to:
+    C:\Windows\System32\drivers\etc\
+    Open the hosts file
+
+Open url http://llink.wyb.ac.lk:8000 to login 
 
 
 ### STEP 15 install ERPNext latest version in bench & site
