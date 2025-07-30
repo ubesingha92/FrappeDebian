@@ -136,8 +136,16 @@ http://llink.wyb.ac.lk:8000
 
 ```bash
 bench new-app [app name]
-bench start
 ```
+
+---
+
+## **STEP 16:Install your app on the site**
+
+```bash
+bench --site llink.wyb.ac.lk install-app llink
+```
+
 
 ---
 
